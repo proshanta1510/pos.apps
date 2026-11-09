@@ -965,13 +965,13 @@ function getSavedUser() {
         let isInspecting = (sessionStorage.getItem('dp_super_admin_inspecting') === '1' || localStorage.getItem('dp_super_admin_inspecting') === '1');
         let isMaster = (cred.isSuperAdmin || isSuperAdmin() || isInspecting ||
                        ((cu === 'admin' || cu === 'superadmin' || cu === 'master') &&
-                        (cp === masterPin || cp === '7788' || cp === '0182250p' || cp === 'admin123' || cp === 'admin12345' || cp === 'admin' || (S && Array.isArray(S.users) && S.users.some(x => (x.u || '').toLowerCase() === 'admin' && x.p === cp)))));
+                        (cp === masterPin || cp === '7788' || cp === '0182250p' || cp === 'admin0182250p' || cp === 'admin0182250p' || cp === 'admin' || (S && Array.isArray(S.users) && S.users.some(x => (x.u || '').toLowerCase() === 'admin' && x.p === cp)))));
         if (isMaster && (CURRENT_SHOP_ID === 'default' || isInspecting)) {
             let superUser = { u: cred.u, p: cred.p, n: (S && S.shop && S.shop.o) || 'Admin', r: 'superadmin', isSuperAdmin: true, pm: { m_saas: true } };
             NAV.forEach(n => superUser.pm['m_' + n[0]] = true);
             return superUser;
         }
-        let list = (S && Array.isArray(S.users) && S.users.length) ? S.users : [{ u: 'admin', p: 'admin123', n: 'Admin', r: 'admin', pm: {} }];
+        let list = (S && Array.isArray(S.users) && S.users.length) ? S.users : [{ u: 'admin', p: 'admin0182250p', n: 'Admin', r: 'admin', pm: {} }];
         let u = list.find(x => (x.u || '').toLowerCase() === cu && x.p === cp);
         if (u) {
             if (CURRENT_SHOP_ID !== 'default') u.isSuperAdmin = false;
@@ -1006,7 +1006,7 @@ function superAdminLoginPrompt() {
             <div style="font-size:12px;color:#64748b;text-align:center;margin:2px 0">— অথবা নিজে ইউজার ও পাসওয়ার্ড দিন —</div>
             <input id="sa-user-input" placeholder="মাস্টার ইউজার" value="admin" style="font-size:14px;padding:8px" onkeydown="if(event.key==='Enter')submitSuperAdminLogin()">
             <input type="password" id="sa-pin-input" placeholder="মাস্টার পিন বা পাসওয়ার্ড (যেমন: 7788 বা admin12345)" value="7788" autofocus style="font-size:16px;padding:9px;border:1.5px solid var(--p)" onkeydown="if(event.key==='Enter')submitSuperAdminLogin()">
-            <small style="color:#0f766e;font-size:12px">💡 পিন: <b>7788</b> বা আপনার অ্যাডমিন পাসওয়ার্ড (<b>admin12345</b> / <b>admin123</b>)</small>
+            <small style="color:#0f766e;font-size:12px">💡 পিন: <b>7788</b> বা আপনার অ্যাডমিন পাসওয়ার্ড (<b>admin0182250</b> / <b>admin0182250p</b>)</small>
             <div id="sa-login-err" style="color:#dc2626;font-size:13px;font-weight:600"></div>
             <div class="r" style="margin-top:6px">
                 <button onclick="submitSuperAdminLogin()" style="background:#0f766e;color:#fff;font-weight:700;padding:10px 18px;flex:1">👑 সুপার অ্যাডমিন প্রবেশ</button>
@@ -1030,8 +1030,8 @@ window.submitSuperAdminLogin = async function(overridePin) {
         if (err) err.textContent = '';
 
         let targetPin = (S && S.devPin) || '7788';
-        let isMasterPin = (pin === targetPin || pin === '7788' || pin === '0182250p' || pin === 'admin123' || pin === 'admin12345' || pin === 'admin');
-        let isMasterAuth = isMasterPin || ((user === 'admin' || user === 'master' || user === 'superadmin') && (pin === 'admin123' || pin === 'admin12345' || pin === '7788' || pin === '0182250p' || pin === targetPin || pin === 'admin'));
+        let isMasterPin = (pin === targetPin || pin === '7788' || pin === '0182250p' || pin === 'admin0182250p' || pin === 'admin0182250p' || pin === 'admin');
+        let isMasterAuth = isMasterPin || ((user === 'admin' || user === 'master' || user === 'superadmin') && (pin === 'admin0182250p' || pin === 'admin0182250p' || pin === '7788' || pin === '0182250p' || pin === targetPin || pin === 'admin'));
 
         if (!isMasterAuth && S && Array.isArray(S.users)) {
             let matched = S.users.find(u => ((u.u || '').toLowerCase() === user || (u.u || '').toLowerCase() === 'admin') && u.p === pin);
